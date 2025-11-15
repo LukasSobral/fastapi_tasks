@@ -14,16 +14,18 @@ def create_category(db: Session, category: CategoryCreate, owner_id: int):
 
 
 def get_all_categories(db: Session, owner_id: int):
-    """Retorna apenas categorias do usuário autenticado"""
-    return db.query(models.Category).filter(models.Category.owner_id == owner_id).all()
+    """Retorna apenas as categorias do usuário autenticado"""
+    return (
+        db.query(models.Category)
+        .filter(models.Category.owner_id == owner_id)
+        .all()
+    )
 
-def get_all_categories(db: Session):
-    """Retorna todas as categorias"""
-    return db.query(models.Category).all()
 
 def get_category_by_id(db: Session, category_id: int):
     """Busca uma categoria específica"""
     return db.query(models.Category).filter(models.Category.id == category_id).first()
+
 
 def update_category(db: Session, category_id: int, category_update: CategoryUpdate):
     category = get_category_by_id(db, category_id)
@@ -36,6 +38,7 @@ def update_category(db: Session, category_id: int, category_update: CategoryUpda
     db.commit()
     db.refresh(category)
     return category
+
 
 def delete_category(db: Session, category_id: int):
     """Remove uma categoria"""
