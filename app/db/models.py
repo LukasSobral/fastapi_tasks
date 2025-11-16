@@ -44,6 +44,7 @@ class Task(Base):
 
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    completed_at = Column(DateTime, nullable=True)
 
     owner = relationship("User", back_populates="tasks")
     category = relationship("Category", back_populates="tasks")
